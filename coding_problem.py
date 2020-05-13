@@ -36,7 +36,7 @@ class Component:
     self.inlets.append(fluidpath)
   def connectOutlet(self,fluidpath):
     self.outlets.append(fluidpath)
-    
+
 class TerminalPath:
   def __init__(self,name):
     self.name=name
@@ -44,8 +44,8 @@ class TerminalPath:
     self.connections=[]
     self.outlets=[]
     self.inlets=[]
-    
-    
+
+
 class FluidPath:
   def __init__(self,name):
     self.name= name
@@ -61,12 +61,12 @@ class FluidPath:
     self.direction=direction
   def __repr__(self):
     return self.name
-  
+
 startPath=TerminalPath('Supply')
 startPath.direction = 'east'
-endPath=TerminalPath('Return') 
-endPath.direction = 'west' 
-  
+endPath=TerminalPath('Return')
+endPath.direction = 'west'
+
 fluid_path0=FluidPath('fluid_path0')
 fluid_path0.assignDirection('east')
 fluid_path0_0=FluidPath('fluid_path0_0')
@@ -119,11 +119,17 @@ def dfs(root, depth ,items):
   print(tab*depth + root.name)
   if(items.get(root)):
     children =items.get(root)
-  else: 
+  else:
     return
   for child in children:
     dfs(child,depth+1,items)
-    
+
+""" Steps
+create data structure for collection of relations
+choose a hashmap where every parent is a key
+and the value is the list of children
+
+"""    
 class PrintTree:
   def __init__(self):
     self.items = dict()
@@ -143,40 +149,21 @@ class PrintTree:
     return self.root
   def printTree(self):
     dfs(self.root,0,self.items)
-#  
+#
 #def bfs(root,depth,items):
 #  for k in family:
 #    print(k.child)
 
-      
-""" perform breadth first search and print out
-stuff like horizontal tree"""
-      
 
 
-  
-    
+
+
+
+
+
   # perform DFS and keep track of depth
-  
+
 pt =PrintTree()
 pt.assignKVpairs(family)
 root = pt.findRoot(family)
 pt.printTree()
-
-
-""" Steps
-create data structure for collection of relations
-choose a hashmap where every parent is a key
-and the value is the list of children
-for example :
-  lifeform -> [animal]
-  animal -> [mammal, fish, bird]
-  mammal->[cat]
-  etc
-
-1. loop through list to put each parent as a key and child as a value
-2. Then also put children in a separate set, and find which
-key is not in the set to learn which one is the root. 
-3. perform DFS starting at root keep track of depth
-
-"""

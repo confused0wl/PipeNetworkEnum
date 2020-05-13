@@ -46,7 +46,7 @@ class Component:
     self.outlets.append(fluidpath)
   def __repr__(self):
     return self.name
-    
+
 class TerminalPath:
   def __init__(self,name):
     self.name=name
@@ -58,7 +58,7 @@ class TerminalPath:
     self.y=0
   def __repr__(self):
     return self.name
-       
+
 class FluidPath:
   def __init__(self,name):
     self.name= name
@@ -75,13 +75,13 @@ class FluidPath:
     self.direction=direction
   def __repr__(self):
     return self.name
-  
+
 startPath0=TerminalPath('Supply0')
 startPath1=TerminalPath('Supply1')
 startPath2=TerminalPath('Supply2')
-endPath=TerminalPath('Return') 
+endPath=TerminalPath('Return')
 
-  
+
 fluid_path0=FluidPath('fluid_path0')
 fluid_path1=FluidPath('fluid_path1')
 fluid_path2=FluidPath('fluid_path2')
@@ -117,7 +117,7 @@ for i in range(len(family)):
   G.add_node(family[i].child.name)
 for i in range(len(family)):
   G.add_edge(family[i].parent.name,family[i].child.name)
-  
+
 
 nx.draw(G)
 plt.show()
@@ -129,11 +129,23 @@ def dfs(root, depth ,items):
   print(tab*depth + root.name)
   if(items.get(root)):
     children =items.get(root)
-  else: 
+  else:
     return
   for child in children:
     dfs(child,depth+1,items)
-    
+
+""" Steps
+create data structure for collection of relations
+choose a hashmap where every parent is a key
+and the value is the list of children
+
+
+1. loop through list to put each parent as a key and child as a value
+2. Then also put children in a separate set, and find which
+key is not in the set to learn which one is the root.
+3. perform DFS starting at root keep track of depth
+
+"""    
 class PrintTree:
   def __init__(self):
     self.items = dict()
@@ -154,21 +166,21 @@ class PrintTree:
   def printTree(self):
     for roots in root:
       dfs(roots,0,self.items)
-#  
+#
 #def bfs(root,depth,items):
 #  for k in family:
 #    print(k.child)
 
-      
+
 """ perform breadth first search and print out
 stuff like horizontal tree"""
-      
 
 
-  
-    
+
+
+
   # perform DFS and keep track of depth
-  
+
 pt =PrintTree()
 pt.assignKVpairs(family)
 root = pt.findRoot(family)
@@ -207,20 +219,3 @@ for component in family:
         outs = outs+component.parent.outlets[i].name+'+'
       print(outs,end=" ")
     print(" ")
-        
-""" Steps
-create data structure for collection of relations
-choose a hashmap where every parent is a key
-and the value is the list of children
-for example :
-  lifeform -> [animal]
-  animal -> [mammal, fish, bird]
-  mammal->[cat]
-  etc
-
-1. loop through list to put each parent as a key and child as a value
-2. Then also put children in a separate set, and find which
-key is not in the set to learn which one is the root. 
-3. perform DFS starting at root keep track of depth
-
-"""
